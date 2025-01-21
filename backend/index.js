@@ -1,9 +1,12 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
 const express = require('express');
 const cors = require('cors');
 const router = express.Router();
 const app = express();
 const mainRouter = require("./routes/index");
-require('dotenv').config();
+
 
 app.use(express.json());
 app.use(cors());
