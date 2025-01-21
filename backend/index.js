@@ -3,6 +3,7 @@ const cors = require('cors');
 const router = express.Router();
 const app = express();
 const mainRouter = require("./routes/index");
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cors());

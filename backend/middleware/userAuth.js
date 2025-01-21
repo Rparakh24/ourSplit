@@ -10,7 +10,7 @@ function userAuth(req,res,next){
         }
         const token = header.split(" ")[1];
         
-        const decoded = jwt.verify(token,JWT_secret);
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
         if(!decoded){
             return res.status(404).json({msg:"JWT not verified"});
         }
