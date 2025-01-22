@@ -16,15 +16,15 @@ export default function AddExpense() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/user/getUser?id=${groupId}`,
+          `https://oursplit.onrender.com/api/user/getUser?id=${groupId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        setMembers(response.data.member); 
-        console.log(response.data.member);// Assuming API returns members array
+        setMembers(response.data.member);
+        console.log(response.data.member); // Assuming API returns members array
       } catch (error) {
         console.error("Error fetching users:", error.message);
       }
@@ -52,22 +52,21 @@ export default function AddExpense() {
       console.error("Amount or members are missing");
       return;
     }
-  
+
     const equalAmount = parseFloat(amount) / members.length; // Convert amount to a number
     const updatedUserAmount = members.map((m) => ({
       userId: m.userId,
       amount: equalAmount,
     }));
-  
+
     console.log("Distributed Amounts:", updatedUserAmount);
     setUserAmount(updatedUserAmount);
   };
-  
 
   const addExpense = async () => {
     try {
-     const response = await axios.post(
-        `http://localhost:3000/api/expense/add?id=${groupId}`,
+      const response = await axios.post(
+        `https://oursplit.onrender.com/api/expense/add?id=${groupId}`,
         {
           desc,
           amount,
@@ -80,21 +79,21 @@ export default function AddExpense() {
           },
         }
       );
-    //   console.log(response.data);
+      //   console.log(response.data);
       navigate(`/mygroup?id=${groupId}`);
       alert("Expense added successfully!");
     } catch (error) {
       console.error("Error adding expense:", error.message);
     }
-   
   };
-  if(!members){
-    return<>
-       <div>loading..</div> 
-    </>
+  if (!members) {
+    return (
+      <>
+        <div>loading..</div>
+      </>
+    );
   }
   return (
-    
     <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-4">Add Expense</h1>
       <div className="mb-4">

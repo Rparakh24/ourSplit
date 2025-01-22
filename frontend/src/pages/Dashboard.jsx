@@ -13,11 +13,14 @@ const Dashboard = () => {
   const fetchGroups = async (filter = "") => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/group/all?filter=${filter}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Example: Add user auth token
-        },
-      });
+      const response = await axios.get(
+        `https://oursplit.onrender.com/api/group/all?filter=${filter}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Example: Add user auth token
+          },
+        }
+      );
       setGroups(response.data.groups);
     } catch (error) {
       console.error("Error fetching groups:", error);
@@ -36,7 +39,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-    <Heading className={"text-5xl font-bold my-10"} text={"Groups"}></Heading>      
+      <Heading className={"text-5xl font-bold my-10"} text={"Groups"}></Heading>
       <div className="w-full max-w-md">
         {/* Search Input */}
         <input

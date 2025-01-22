@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 export default function CreateGroup() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
-  const [name,setName] = useState("");
-  const [members,setMembers] = useState([]);
+  const [name, setName] = useState("");
+  const [members, setMembers] = useState([]);
   const navigate = useNavigate();
   const addUser = (id) => {
-    if (members.some(member => member.userId === id)) {
+    if (members.some((member) => member.userId === id)) {
       setMembers(members.filter((member) => member.userId !== id));
     } else {
       setMembers([
@@ -24,28 +24,32 @@ export default function CreateGroup() {
   };
   console.log(name);
   console.log(members);
-  const createGroup = async()=>{
-    const response = await axios.post("http://localhost:3000/api/group/create",{
-      name:name,
-      members:members.map((member)=>({
-        userId:member.userId,
-        gets:member.gets,
-        owed:member.owed
-      }))
-    },{
-      headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace "token" with your actual key
+  const createGroup = async () => {
+    const response = await axios.post(
+      "https://oursplit.onrender.com/api/group/create",
+      {
+        name: name,
+        members: members.map((member) => ({
+          userId: member.userId,
+          gets: member.gets,
+          owed: member.owed,
+        })),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace "token" with your actual key
+        },
       }
-    })
-    if(response.data){
-      navigate(`/mygroup?id=${response.data.groupId}`)
+    );
+    if (response.data) {
+      navigate(`/mygroup?id=${response.data.groupId}`);
     }
-  }
+  };
   // Function to fetch users from the API
   const fetchUsers = async (filter = "") => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/user/all?filter=${filter}`,
+        `https://oursplit.onrender.com/api/user/all?filter=${filter}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace "token" with your actual key
@@ -93,9 +97,14 @@ export default function CreateGroup() {
       <div className="w-11/12 md:w-2/3 lg:w-1/2 mt-6">
         {users.length > 0 ? (
           users.map((user) => (
-            <div onClick={()=>addUser(user._id)}
+            <div
+              onClick={() => addUser(user._id)}
               key={user._id}
-              className={`${members.some((member) => member.userId === user._id) ? "bg-blue-300" : "hover:bg-gray-100"} flex justify-between items-center p-4 border-b border-gray-200  rounded-lg`}
+              className={`${
+                members.some((member) => member.userId === user._id)
+                  ? "bg-blue-300"
+                  : "hover:bg-gray-100"
+              } flex justify-between items-center p-4 border-b border-gray-200  rounded-lg`}
             >
               {/* User Info */}
               <div className="text-sm font-medium text-gray-700">
@@ -107,7 +116,14 @@ export default function CreateGroup() {
           <div className="text-center text-gray-500 mt-4">No users found</div>
         )}
       </div>
-      <div><button className=" mt-10 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={createGroup}>Add Group </button></div>
+      <div>
+        <button
+          className=" mt-10 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+          onClick={createGroup}
+        >
+          Add Group{" "}
+        </button>
+      </div>
     </div>
   );
 }

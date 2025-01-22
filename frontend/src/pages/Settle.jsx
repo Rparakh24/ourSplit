@@ -13,7 +13,7 @@ export default function Settle() {
   const navigate = useNavigate();
   const getMyGroup = async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/group/mygroup?id=${groupId}`,
+      `https://oursplit.onrender.com/api/group/mygroup?id=${groupId}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,7 +33,7 @@ export default function Settle() {
   async function settleup(to, from) {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/expense/settle?id=${groupId}`,
+        `https://oursplit.onrender.com/api/expense/settle?id=${groupId}`,
         {
           to: to,
           from: from,
