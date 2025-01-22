@@ -32,16 +32,28 @@ router.post('/signup',async(req,res)=>{
     res.status(200).json({token:token, msg:"User created sucessfully"});
 
 })
-router.post("/signin",async(req,res)=>{
-    const{username,pswd} = req.body;
-    const check = await User.findOne({username});
-    if(check){
-        return res.status(200).json({msg:true});
+router.post('/signin', async (req, res) => {
+    const { username, pswd } = req.body;
+
+    try {
+        // Check if the user exists
+        const user = await User.findOne({ username });
+
+        // If the user exists and the password matches
+        if (user && user.pswd === pswd) { // For production, use password hashing (e.g., bcrypt.compare)
+            const userId = user._id;
+            const token = jwt.sign({ userId }, JWT_secret);
+
+            return res.status(200).json({ msg: true, token });
+        }
+
+        // If user does not exist or password is incorrect
+        res.status(400).json({ msg: false, error: "Invalid username or password" });
+    } catch (error) {
+        console.error("Error during signin:", error);
+        res.status(500).json({ msg: false, error: "Internal server error" });
     }
-    else{
-        res.status(400).json({msg:false});
-    }
-})
+});
 router.get("/all",userAuth,async(req,res)=>{
     const filter = req.query.filter || "";
     console.log(filter);
