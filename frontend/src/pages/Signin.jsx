@@ -1,6 +1,6 @@
 import Heading from "../components/Heading";
 import Subheading from "../components/Subheading";
-import Inputbox from "../components/InputBox";
+import Inputbox from "../components/Inputbox";
 import Button from "../components/Button";
 import Linkto from "../components/Linkto";
 import { useState } from "react";
