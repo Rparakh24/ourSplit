@@ -23,7 +23,8 @@ export default function Signin() {
         },
       }
     );
-    if (response.data.success === "Success") {
+    if (response.data.msg === true) {
+      localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
     }
   };
