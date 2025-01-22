@@ -13,7 +13,10 @@ export default function Signin() {
   const handleSign = async (e) => {
     const response = await axios.post(
       "https://oursplit.onrender.com/api/user/signin",
-      {},
+      {
+        username: username,
+        pswd: pswd,
+      },
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
