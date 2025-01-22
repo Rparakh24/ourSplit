@@ -12,7 +12,7 @@ export default function Signin() {
   const navigate = useNavigate();
   const handleSign = async (e) => {
     const response = await axios.post(
-      "https://oursplit.onrender.com/api/v1/user/signin",
+      "https://oursplit.onrender.com/api/user/signin",
       {},
       {
         headers: {
